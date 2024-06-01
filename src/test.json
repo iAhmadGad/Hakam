@@ -1,0 +1,9 @@
+{
+    "execute": "pypy watermelon.py"
+    ,"tests":
+    [
+	["8", "YES"]
+	,["5", "NO"]
+	,["2", "NO"]
+    ]
+}
