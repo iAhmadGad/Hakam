@@ -2,16 +2,18 @@
 
 ## Why Hakam?
 
-As a problem solver, sometimes you might have slow internet connection, so you wait until your submission get tested, so why not testing your solutuon locally before you submit it?
+As a problem solver, sometimes you might have slow internet, and waiting until your submission get tested may take longer than expected, you may refresh your page a lot of times as well.
+
+so why not testing your solutuon locally before you submit it?
 
 ## What does "Hakam" mean?
 
-**"حكم"** is an arabic word means judge, and it is pronounced as **/ħakam/**.
+**Hakam**'s name derives from **"حَكَم"** which is an arabic word means judge, and it is pronounced as **/ħakam/**.
 but since there is no /ħ/ sound in english i just _latinised_ the name as **"Hakam"**.
 
-## Install:
+## Install
 
-- prerequisites:
+- Prerequisites:
   - Make
   - PyInstaller
   - Python multiline module
@@ -20,13 +22,13 @@ but since there is no /ħ/ sound in english i just _latinised_ the name as **"Ha
 git clone --depth 1 https://github.com/iAhmadGad/hakam.git && cd hakam && make install
 ```
 
-## Manual:
+## Manual
 
-### Test File:
+### Test File
 
-Hakam depends on json files to compile your soltution code, execute it, and then test it.
+Hakam reads json files to compile، execute, and then test your solution code.
 
-here is an example:
+Here is an example:
 
 ```json
 {
@@ -42,21 +44,21 @@ here is an example:
 ```
 - `compile` is the command used to compile your code before excuting it. in case your language is interpreted like Python you can just delete this key.
 
-- `execute` is the command used to execute your code. it is required
+- `execute` is the command used to execute your code. **it is required.**
 
-- `tests` is an array of 2-element arrays, where each [0] index of them is the input and the [1] index is the expected output, i.e. right answer.
+- `tests` is an array of 2-element arrays, where each [0] index of them is the input and the [1] index is the expected output, i.e. the right answer. **it is required.**
 
-### Create new testlistfile:
+### Create new Test File
 
-no need to write everything in the test file manually, Hakam will just handle this for you, just execute:
+No need to write everything in the test file manually, Hakam will just handle this for you, just execute:
 
 ```bash
 hakam new [testname]
 ```
 
-- `[testname]` is optional, if given, the filename will be `[testname].json`, otherwise `hakam.json`
+- `[testname]` is optional, if given, the filename will be `[testname].json`, otherwise `hakam.json`.
 
-the result file will be as follows:
+The file will be written as follows:
 
 ```json
 {
@@ -70,10 +72,39 @@ the result file will be as follows:
 }
 ```
 
-### Test your solution:
+### Test your solution
 
 ```bash
-hakam test [testname]
+hakam test [testname] <option>
 ```
 
-- `[testname]` is optional, if given, the filename will be `[testname].json`, otherwise `hakam.json`
+- `[testname]` is optional, if given, the filename will be `[testname].json`, otherwise `hakam.json`.
+- Until now there is no option but `--strict`, which makes Hakam exits when your code answers wrong or if runtime error is thrown.
+
+Output should be something like this:
+```
+Compiling...
+Executing...
+0: Test Passed :)
+1: Test Passed :)
+2: Wrong Answer :^)
+expected NO for input 2 not YES
+Passed: 2
+Wrong answers: 1
+```
+In case all your code passed all the tests output should be something like this:
+```
+Compiling...
+Executing...
+0: Test Passed :)
+1: Test Passed :)
+2: Test Passed :)
+Accepted
+```
+In case your code outputted wrong answer and you chose `strict` option it deosnt proceed to perform tests, and output should be something like this:
+```
+Compiling...
+Executing...
+0: Wrong Answer :^)
+expected YES for input 8 not NO
+```
