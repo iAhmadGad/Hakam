@@ -7,7 +7,7 @@ RED="\033[31m"
 GREEN="\033[32m"
 LIGHT_WHITE="\033[97m"
 
-USAGE="Usage: hakam [] <candidate> <option>\n\ncommands:\n\thelp\n\tnew : new testlistfile with name 'hakam.json'\n\tnew <name> : new testlistfile with name <name>.json\n\ttest : test file with name 'hakam.json'\n\ttest <name> : test file with name <name>.json\n\noptions:\n\t--strict : strict mode exits when code gives wrong answers or throws runtims error".expandtabs(4)
+USAGE="Usage: hakam [command] <candidate> <option>\n\ncommands:\n\thelp\n\tnew : new testlistfile with name 'hakam.json'\n\tnew <name> : new testlistfile with name <name>.json\n\ttest : test file with name 'hakam.json'\n\ttest <name> : test file with name <name>.json\n\noptions:\n\t--strict : strict mode exits when code gives wrong answers or throws runtims error".expandtabs(4)
 HAKAMFILE='{\n\t"compile": ""\n\t,"execute": ""\n\t,"tests":\n\t[\n\t\t["", ""]\n\t\t,["", ""]\n\t]\n}'.expandtabs(4)
 
 def main():
