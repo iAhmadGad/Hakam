@@ -8,7 +8,7 @@ YELLOW="\033[33m"
 LIGHT_WHITE="\033[97m"
 LIGHT_GREEN="\033[38;5;48m"
 
-def test(testListFile):
+def test(testListFile, strict = False):
         f = open(testListFile, "r")
         testList = multiline.load(f)
         f.close()
@@ -44,12 +44,16 @@ def test(testListFile):
                                         ls.append(f"{LIGHT_WHITE}{i}: {RED}Execution failed with code {result.returncode}")
                                         ls[-1] += f"\n{RED}result.stderr.decode(){RESET}"
                                         errorCount += 1
+                                        if strict:
+                                                sys.exit(ls[-1])
                                 elif output == test[1]:
                                         ls.append(f"{LIGHT_WHITE}{i}: {GREEN}Test Passed :){RESET}")
                                         passedCount += 1
                                 else:
                                         ls.append(f"{LIGHT_WHITE}{i}: {RED}Wrong Answer :^)\n{RESET}expected {LIGHT_WHITE}{test[1]} {RESET}for input {LIGHT_WHITE}{test[0]} {RESET}not {RED}{output}")
                                         wrongCount += 1
+                                        if strict:
+                                                sys.exit(ls[-1])
 
                         except subprocess.CalledProcessError as e:
                                 ls.append(f"{RED}Command failed with error code {e.returncode}: {e.output.decode()}{RESET}")

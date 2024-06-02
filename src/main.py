@@ -14,8 +14,13 @@ def main():
     if sys.argv[1] == "test":
         if len(sys.argv) == 2:
             test("hakam.json")
+        elif len(sys.argv) == 3:
+            if sys.argv[2] == "--strict":
+                test("hakam.json", strict = True)
+            else:
+                test(sys.argv[2])
         else:
-            test(sys.argv[2])
+            test(sys.argv[2], strict = True)
     elif sys.argv[1] == "new":
         if len(sys.argv) == 2:
             f = open("hakam.json", "w")
