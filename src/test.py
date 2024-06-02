@@ -8,8 +8,8 @@ YELLOW="\033[33m"
 LIGHT_WHITE="\033[97m"
 LIGHT_GREEN="\033[38;5;48m"
 
-def test(testListFile, strict = False):
-        f = open(testListFile, "r")
+def test(testName, strict = False):
+        f = open(f"{testName}.json", "r")
         testList = multiline.load(f)
         f.close()
 
