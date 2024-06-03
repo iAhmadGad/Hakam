@@ -2,7 +2,7 @@
 
 ## Why Hakam?
 
-As a problem solver, sometimes you might have slow internet, and waiting until your submission get tested may take longer than expected, you may refresh your page a lot of times as well.
+As a problem solver, sometimes you might have slow internet, and waiting until your submission get tested may take longer than expected, you might even refresh your page a lot of times.
 
 so why not testing your solutuon locally before you submit it?
 
@@ -11,21 +11,27 @@ so why not testing your solutuon locally before you submit it?
 **Hakam**'s name derives from **"حَكَم"** which is an arabic word means judge, and it is pronounced as **/ħakam/**.
 but since there is no /ħ/ sound in english i just _latinised_ the name as **"Hakam"**.
 
+## What languages does Hakam support?
+
+Any language that supports `stdin` & `stdout`.
+
 ## Install
 
 - Prerequisites:
   - Make
   - PyInstaller
   - Python multiline module
+  - In order to perform tests you should have the compiler or the interpreter of your language installed
 
 ```bash
-git clone --depth 1 https://github.com/iAhmadGad/hakam.git && cd hakam && make install
+git clone --depth 1 https://github.com/iahmadgad/hakam.git && cd hakam && make install
 ```
 
 ## Test File
 
 Test file is a json file hakam uses to compile، execute, and then test your solution code.
-Here is an example of Test file:
+
+Here is an example of a test file:
 
 ```json
 {
