@@ -57,6 +57,10 @@ Here is an example of a test file:
 hakam [candidate] <option>
 ```
 
+### `help`
+
+prints Usage
+
 ### `new [testfile]` 
 
 - `[testfile]` candidate is optional, if given, a file will be created with name `[testfile]`, otherwise the name will be literally `testfile.json`.
