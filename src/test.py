@@ -66,8 +66,8 @@ def printResults(testList):
         if errorCount:
             print(f"{YELLOW}Runtime wrrors: {LIGHT_WHITE}{errorCount}{RESET}")
 
-def test(testName, strict = False):
-    f = open(f"{testName}.json", "r")
+def test(testFile, strict = False):
+    f = open(testFile, "r")
     testList = multiline.load(f)
     f.close()
 
