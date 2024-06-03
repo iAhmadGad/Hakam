@@ -8,7 +8,8 @@ GREEN="\033[32m"
 LIGHT_WHITE="\033[97m"
 
 USAGE="Usage: hakam <command> [candidate] [option]\n\ncommands:\n\thelp\n\tnew : new test file with name 'testfile.json'\n\tnew [testfile] : new test file with name [testfile]\n\ttest : test file with name 'testfile.json'\n\ttest [testfile] : test file with name [testfile]\n\noptions:\n\t--strict : makes Hakam exits if your code answered wrong or if runtime error is thrown".expandtabs(4)
-TESTFILE='{\n\t"compile": ""\n\t,"execute": ""\n\t,"tests":\n\t[\n\t\t["", ""]\n\t\t,["", ""]\n\t]\n}'.expandtabs(4)
+
+TESTFILE='{\n\t"compile": ""\n\t,"execute": ""\n\t,"tests":\n\t[\n\t\t["", ""]\n\t\t,["", ""]\n\t]\n}\n'.expandtabs(4)
 
 def main():
     if sys.argv[1] == "test":
