@@ -2,7 +2,7 @@
 
 ## Why Hakam?
 
-As a problem solver, sometimes you might have slow internet, and waiting until your submission get tested may take longer than expected, you might even refresh your page a lot of times.
+As a problem solver, sometimes you might have slow internet, and waiting until your submission get tested might take longer than expected, you might even refresh your page a lot of times.
 
 so why not testing your solutuon locally before you submit it?
 
@@ -29,7 +29,7 @@ git clone --depth 1 https://github.com/iahmadgad/hakam.git && cd hakam && make i
 
 ## Test File
 
-Test file is a json file hakam uses to compile، execute, and then test your solution code.
+Test file is a json file Hakam uses to compile، execute, and then test your solution code.
 
 Here is an example of a test file:
 
@@ -55,7 +55,7 @@ Here is an example of a test file:
 
 ### `new [testfile]` 
 
-- `[testset]` candidate is optional, if given, a file will be created with name `[testfile]`, otherwise the name will be literally `testfile.json`.
+- `[testfile]` candidate is optional, if given, a file will be created with name `[testfile]`, otherwise the name will be literally `testfile.json`.
 
 The file will be written as follows:
 
