@@ -51,7 +51,11 @@ Here is an example of a test file:
 
 - `tests` is an array of 2-element arrays, where each [0] index of them is the input and the [1] index is the expected output, i.e. the right answer. **it is required.**
 
-## Commands
+## Usage
+
+```bash
+hakam [candidate] <option>
+```
 
 ### `new [testfile]` 
 
