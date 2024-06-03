@@ -9,4 +9,4 @@ install:
 	mv ./dist/hakam /bin/
 
 clean:
-	rm -rf */__pycache__
+	rm -rf */__pycache__ */*~
