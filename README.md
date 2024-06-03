@@ -54,7 +54,7 @@ Here is an example of a test file:
 ## Usage
 
 ```bash
-hakam [candidate] <option>
+hakam <command> [candidate] [option]
 ```
 
 ### `help`
@@ -63,7 +63,7 @@ prints Usage
 
 ### `new [testfile]` 
 
-- `[testfile]` candidate is optional, if given, a file will be created with name `[testfile]`, otherwise the name will be literally `testfile.json`.
+- `[testfile]`: if given, a file will be created with name `[testfile]`, otherwise the name will be literally `testfile.json`.
 
 The file will be written as follows:
 
@@ -79,10 +79,10 @@ The file will be written as follows:
 }
 ```
 
-### `test [testfile] <option>`
+### `test [testfile] [--strict]`
 
-- `[testfile]` is optional, if given, the file with name `[testfile]` will be tested, otherwise the file with name `testfile.json` will be tested.
-- Until now there is no option but `--strict`, which makes Hakam exits if your code answered wrong or if runtime error is thrown.
+- `[testfile]`: if given, the file with name `[testfile]` will be tested, otherwise the file with name `testfile.json` will be tested.
+- `[--strict]`: if chosen Hakam will exit if your code answered wrong or if runtime error is thrown.
 
 Output should be something like this:
 ```
@@ -104,7 +104,7 @@ Executing...
 2: Test Passed :)
 Accepted
 ```
-In case your code answered wrong and you chose `strict` option, Hakam won't proceed to perform tests, and output should be something like this:
+In case your code answered wrong and you chose `--strict` option, Hakam won't proceed to perform tests, and output should be something like this:
 ```
 Compiling...
 Executing...
