@@ -28,7 +28,7 @@ def main():
             f.write(TESTFILE)
             f.close()
         else:
-            f = open({sys.argv[2]}, "w")
+            f = open(sys.argv[2], "w")
             f.write(TESTFILE)
             f.close()
     elif sys.argv[1] == "help":
