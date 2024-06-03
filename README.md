@@ -22,13 +22,10 @@ but since there is no /ħ/ sound in english i just _latinised_ the name as **"Ha
 git clone --depth 1 https://github.com/iAhmadGad/hakam.git && cd hakam && make install
 ```
 
-## Manual
+## Test File
 
-### Test File
-
-Hakam reads json files to compile، execute, and then test your solution code.
-
-Here is an example:
+Test file is a json file hakam uses to compile، execute, and then test your solution code.
+Here is an example of Test file:
 
 ```json
 {
@@ -48,15 +45,11 @@ Here is an example:
 
 - `tests` is an array of 2-element arrays, where each [0] index of them is the input and the [1] index is the expected output, i.e. the right answer. **it is required.**
 
-### Create new Test File
+## Commands
 
-No need to write everything in the test file manually, Hakam will just handle this for you, just execute:
+### `new [testfile]` 
 
-```bash
-hakam new [testname]
-```
-
-- `[testname]` is optional, if given, the filename will be `[testname].json`, otherwise `hakam.json`.
+- `[testset]` candidate is optional, if given, a file will be created with name `[testfile]`, otherwise the name will be literally `testfile.json`.
 
 The file will be written as follows:
 
@@ -72,14 +65,10 @@ The file will be written as follows:
 }
 ```
 
-### Test your solution
+### `test [testfile] <option>`
 
-```bash
-hakam test [testname] <option>
-```
-
-- `[testname]` is optional, if given, the filename will be `[testname].json`, otherwise `hakam.json`.
-- Until now there is no option but `--strict`, which makes Hakam exits when your code answers wrong or if runtime error is thrown.
+- `[testfile]` is optional, if given, the file with name `[testfile]` will be tested, otherwise the file with name `testfile.json` will be tested.
+- Until now there is no option but `--strict`, which makes Hakam exits if your code answered wrong or if runtime error is thrown.
 
 Output should be something like this:
 ```
@@ -92,7 +81,7 @@ expected NO for input 2 not YES
 Passed: 2
 Wrong answers: 1
 ```
-In case all your code passed all the tests output should be something like this:
+In case your code passed all the tests output should be something like this:
 ```
 Compiling...
 Executing...
