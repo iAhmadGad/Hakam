@@ -8,15 +8,11 @@ RED = "\033[31m"
 GREEN = "\033[32m"
 LIGHT_WHITE = "\033[97m"
 
-TESTFILE = """{
+TESTFILE = {
     "compile": "",
     "execute": "",
-    "tests": [
-        ["", ""],
-        ["", ""]
-    ]
+    "tests": []
 }
-"""
     
 def main():
     parser = argparse.ArgumentParser(description="Hakam (Problem solving judge)")
@@ -25,6 +21,10 @@ def main():
     # New command
     parser_new = subparsers.add_parser("new", help="Create a new test file")
     parser_new.add_argument("testfile", nargs="?", default="testfile.json", help="Name of the test file to create")
+    parser_new.add_argument("--compile", "-c", metavar="command", default="", help="compile command")
+    parser_new.add_argument("--execute", "-e", metavar="command", default="", help="execute command")
+    parser_new.add_argument("--tests", "-t", metavar="number",default=0, help="number of tests")
+
 
     # Test command
     parser_test = subparsers.add_parser("test", help="Run tests on a test file")
@@ -35,8 +35,13 @@ def main():
     args = parser.parse_args()
 
     if args.command == "new":
+        test_dict = {
+            "compile": args.compile,
+            "execute": args.execute,
+            "tests": [""] * int(args.tests)
+        }
         with open(args.testfile, "w") as f:
-            f.write(TESTFILE)
+            f.write(multiline.dumps(test_dict, indent=4))
         print(f"{LIGHT_WHITE}Created new test file: {args.testfile}{RESET}")
 
     elif args.command == "test":
