@@ -58,7 +58,7 @@ Here is an example of a test file:
 hakam [-h, --help] {new,test} ...
 ```
 
-### [`-h, --help`]
+### `[-h, --help]`
 
 prints usage
 
