@@ -35,13 +35,13 @@ def main():
     args = parser.parse_args()
 
     if args.command == "new":
-        with open(args.file, "w") as f:
+        with open(args.testfile, "w") as f:
             f.write(TESTFILE)
-        print(f"{LIGHT_WHITE}Created new test file: {args.file}{RESET}")
+        print(f"{LIGHT_WHITE}Created new test file: {args.testfile}{RESET}")
 
     elif args.command == "test":
         result_dict = {}
-        with open(args.file, "r") as f:
+        with open(args.testfile, "r") as f:
             test_dict = multiline.load(f)
         result_dict = test(test_dict, strict=args.strict, verbose=args.verbose)
         frontend.print_results(result_dict["results"])
