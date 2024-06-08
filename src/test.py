@@ -1,4 +1,4 @@
-import sys, subprocess, multiline, threading
+import sys, subprocess, threading
 from frontend import print_dots
 
 RESET="\033[0m"
@@ -9,24 +9,25 @@ YELLOW="\033[33m"
 LIGHT_WHITE="\033[97m"
 LIGHT_GREEN="\033[38;5;48m"
 
-results = []
-passed_count = 0
-wrong_count = 0
-error_count = 0
+result_dict = {
+    "passed_count": 0,
+    "wrong_count": 0,
+    "error_count":0,
+    "results": []
+}
 
 def compile(compile_command):
     compile_result = subprocess.run(compile_command, shell=True)
     if compile_result.returncode != 0:
         sys.exit(f"Compilation failed with code {compile_result.returncode}")
 
-def execute(execute_command, test_dict, strict):
-    global passed_count, wrong_count, error_count
-    for i in range(len(test_dict["tests"])):
-        test = test_dict["tests"][i]
+def execute(execute_command, tests, strict, verbose):
+    for i in range(len(tests)):
+        test = tests[i]
         input_data = test[0].encode().decode('unicode_escape')  # Interpret escape sequences
         try:
             result = subprocess.run(
-            test_dict['execute'],
+            execute_command,
             input=input_data.encode(),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -34,46 +35,31 @@ def execute(execute_command, test_dict, strict):
             )
             output = result.stdout.decode().strip()
             if result.returncode != 0:
-                results.append(f"{LIGHT_WHITE}{i}: {RED}Execution failed with code {result.returncode}")
-                results[-1] += f"\n{RED}result.stderr.decode(){RESET}"
-                error_count += 1
+                if verbose:
+                    result_dict["results"].append(f"{LIGHT_WHITE}{i}: {RED}Execution failed with code {result.returncode}")
+                    result_dict["results"][-1] += f"\n{RED}{result.stderr.decode()}{RESET}"
+                    
+                result_dict["error_count"] += 1                
                 if strict:
-                    sys.exit(ls[-1])
+                     sys.exit(result_dict["results"][-1])
+                    
             elif output == test[1]:
-                results.append(f"{LIGHT_WHITE}{i}: {GREEN}Test Passed :){RESET}")
-                passed_count += 1
+                if verbose:
+                    result_dict["results"].append(f"{LIGHT_WHITE}{i + 1}: {GREEN}Test Passed :){RESET}")
+                result_dict["passed_count"] += 1
             else:
-                results.append(f"{LIGHT_WHITE}{i}: {RED}Wrong Answer :^)\n{RESET}expected {LIGHT_WHITE}{test[1]} {RESET}for input {LIGHT_WHITE}{test[0]} {RESET}not {RED}{output}")
-                wrong_count += 1
+                if verbose:
+                    result_dict["results"].append(f"{LIGHT_WHITE}{i + 1}: {RED}Wrong Answer :^)\n{RESET}expected {LIGHT_WHITE}{test[1]} {RESET}for input {LIGHT_WHITE}{test[0]} {RESET}not {RED}{output}")
+                result_dict["wrong_count"] += 1
                 if strict:
-                    sys.exit(results[-1])
+                    sys.exit(f"{LIGHT_WHITE}{i + 1}: {RED}Wrong Answer :^)\n{RESET}expected {LIGHT_WHITE}{test[1]} {RESET}for input {LIGHT_WHITE}{test[0]} {RESET}not {RED}{output}")
 
         except subprocess.CalledProcessError as e:
-            results.append(f"{RED}Command failed with error code {e.returncode}: {e.output.decode()}{RESET}")            
+            sys.exit(f"{RED}Execution Command failed with error code {e.returncode}: {e.output.decode()}{RESET}")
 
-def print_results():
-    
-    for result in results:
-        print(f"{result}\n", end="")
-
-def print_final_result(test_dict):
-    
-     if passed_count == len((test_dict["tests"])):
-        print(f"{BOLD}{LIGHT_GREEN}Accepted{RESET}")
-     else:
-        if passed_count:
-            print(f"{LIGHT_GREEN}Passed: {LIGHT_WHITE}{passed_count}{RESET}")
-        if wrong_count:
-            print(f"{RED}Wrong answers: {LIGHT_WHITE}{wrong_count}{RESET}")
-        if error_count:
-            print(f"{YELLOW}Runtime wrrors: {LIGHT_WHITE}{error_count}{RESET}")
-
+    return result_dict
             
-def test(test_file, strict = False, verbose = False):
-    f = open(test_file, "r")
-    test_dict = multiline.load(f)
-    f.close()
-
+def test(test_dict, strict = False, verbose = False):
     stop_event = threading.Event()
 
     if "compile" in test_dict:
@@ -90,10 +76,10 @@ def test(test_file, strict = False, verbose = False):
         print()
 
     if "execute" in test_dict:
-        print("Executing...", end="")
+        print("Testing...", end="")
         stop_event.clear()
         t1 = threading.Thread(target=print_dots, args=(stop_event,))
-        t2 = threading.Thread(target=execute, args=(test_dict["execute"], test_dict, strict))
+        t2 = threading.Thread(target=execute, args=(test_dict["execute"], test_dict["tests"], strict, verbose))
         t1.start()
         t2.start()
 
@@ -102,7 +88,4 @@ def test(test_file, strict = False, verbose = False):
         t1.join()
         print()
 
-    if verbose:
-        print_results()
-
-    print_final_result(test_dict)
+    return result_dict

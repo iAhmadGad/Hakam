@@ -1,5 +1,6 @@
-import argparse
+import argparse, multiline
 from test import test
+import frontend
 
 RESET = "\033[0m"
 BOLD = "\033[1m"
@@ -16,14 +17,6 @@ TESTFILE = """{
     ]
 }
 """
-
-def create_test_file(filename):
-    with open(filename, "w") as f:
-        f.write(TESTFILE)
-    print(f"{LIGHT_WHITE}Created new test file: {filename}{RESET}")
-
-def run_tests(filename, strict, verbose):
-    test(filename, strict=strict, verbose=verbose)
     
 def main():
     parser = argparse.ArgumentParser(description="Hakam (Problem solving judge)")
@@ -42,9 +35,20 @@ def main():
     args = parser.parse_args()
 
     if args.command == "new":
-        create_test_file(args.file)
+        with open(args.file, "w") as f:
+            f.write(TESTFILE)
+        print(f"{LIGHT_WHITE}Created new test file: {args.file}{RESET}")
+
     elif args.command == "test":
-        run_tests(args.file, args.strict, args.verbose)
+        result_dict = {}
+        with open(args.file, "r") as f:
+            test_dict = multiline.load(f)
+        result_dict = test(test_dict, strict=args.strict, verbose=args.verbose)
+        frontend.print_results(result_dict["results"])
+        frontend.print_final_result(result_dict["passed_count"], result_dict["wrong_count"], result_dict["error_count"])
+
+        print(result_dict)
 
 if __name__ == "__main__":
     main()
+    
