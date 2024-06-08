@@ -47,8 +47,6 @@ def main():
         frontend.print_results(result_dict["results"])
         frontend.print_final_result(result_dict["passed_count"], result_dict["wrong_count"], result_dict["error_count"])
 
-        print(result_dict)
-
 if __name__ == "__main__":
     main()
     
