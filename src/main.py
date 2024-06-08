@@ -42,10 +42,13 @@ def main():
     elif args.command == "test":
         result_dict = {}
         with open(args.testfile, "r") as f:
-            test_dict = multiline.load(f)
+            test_dict = multiline.load(f, multiline=True)
         result_dict = test(test_dict, strict=args.strict, verbose=args.verbose)
         frontend.print_results(result_dict["results"])
         frontend.print_final_result(result_dict["passed_count"], result_dict["wrong_count"], result_dict["error_count"])
+        print(test_dict)
+        print()
+        print(result_dict)
 
 if __name__ == "__main__":
     main()

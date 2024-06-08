@@ -43,7 +43,7 @@ def execute(execute_command, tests, strict, verbose):
                 if strict:
                      sys.exit(result_dict["results"][-1])
                     
-            elif output == test[1]:
+            elif output == test[1].strip():
                 if verbose:
                     result_dict["results"].append(f"{LIGHT_WHITE}{i + 1}: {GREEN}Test Passed :){RESET}")
                 result_dict["passed_count"] += 1

@@ -20,7 +20,7 @@ def print_results(results):
 
 def print_final_result(passed_count, wrong_count, error_count):
     
-     if not (error_count and wrong_count):
+     if not (error_count or wrong_count):
         print(f"{BOLD}{LIGHT_GREEN}Accepted{RESET}")
      else:
         if passed_count:
