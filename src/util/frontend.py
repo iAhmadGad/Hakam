@@ -1,17 +1,30 @@
 import time
-
-RESET="\033[0m"
-BOLD="\033[1m"
-RED="\033[31m"
-GREEN="\033[32m"
-YELLOW="\033[33m"
-LIGHT_WHITE="\033[97m"
-LIGHT_GREEN="\033[38;5;48m"
+from util.colors import RESET, BOLD, RED, YELLOW, LIGHT_WHITE, LIGHT_GREEN
 
 def print_dots(stop_event):
     while not stop_event.is_set():
         print(".", end="", flush=True)
         time.sleep(0.5)
+
+def get_tests(tests_number):
+    tests = []
+    for i in range(tests_number):
+        print("Input:")
+        _input = ""
+        try:
+            while True:
+                _input += input() + "\n"
+        except EOFError:
+            pass
+        print("Output:")
+        output = ""
+        try:
+            while True:
+                output += input() + "\n"
+        except EOFError:
+            pass
+        tests.append([_input.strip(), output.strip()])
+    return tests
 
 def print_results(results):
 

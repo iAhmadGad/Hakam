@@ -1,18 +1,8 @@
-import argparse, multiline
+import argparse
 from test import test
-import frontend
-
-RESET = "\033[0m"
-BOLD = "\033[1m"
-RED = "\033[31m"
-GREEN = "\033[32m"
-LIGHT_WHITE = "\033[97m"
-
-TESTFILE = {
-    "compile": "",
-    "execute": "",
-    "tests": []
-}
+from file import new, set, add, remove
+from util.frontend import print_results, print_final_result
+from util.colors import RESET, LIGHT_WHITE
     
 def main():
     parser = argparse.ArgumentParser(description="Hakam (Problem solving judge)")
@@ -20,40 +10,58 @@ def main():
 
     # New command
     parser_new = subparsers.add_parser("new", help="Create a new test file")
-    parser_new.add_argument("testfile", nargs="?", default="testfile.json", help="Name of the test file to create")
-    parser_new.add_argument("--compile", "-c", metavar="command", default="", help="compile command")
-    parser_new.add_argument("--execute", "-e", metavar="command", default="", help="execute command")
-    parser_new.add_argument("--tests", "-t", metavar="number",default=0, help="number of tests")
+    parser_new.add_argument("--filename", "-f", default="hakamfile.json", help="Name of the test file to create")
+    parser_new.add_argument("--compile", "-c", metavar="command", default="", help="Compile command")
+    parser_new.add_argument("--execute", "-e", metavar="command", default="", help="Execute command")
+    parser_new.add_argument("--tests", "-t", metavar="number",default=0, help="Number of tests")
 
+    # Set command
+    parser_set = subparsers.add_parser("set", help="Set values in a test file")
+    parser_set.add_argument("--filename", "-f", default="hakamfile.json", help="Name of the test file to add values")
+    parser_set.add_argument("--compile", "-c", metavar="command", default="", help="Set compile command")
+    parser_set.add_argument("--execute", "-e", metavar="command", default="", help="Set execute command")
+    parser_set.add_argument("--tests", "-t", metavar="number", help="Number of tests to set, overrides any existing tests")
+
+    # Add command
+    parser_add = subparsers.add_parser("add", help="Add values to a test file")
+    parser_add.add_argument("--filename", "-f", default="hakamfile.json", help="Name of the test file to add values")
+    parser_add.add_argument("--compile", "-c", metavar="command", default="", help="Add compile command")
+    parser_add.add_argument("--tests", "-t", metavar="number", help="Number of tests to add")
+
+    # Remove command
+    parser_rm = subparsers.add_parser("rm", help="Remove values from a test file")
+    parser_rm.add_argument("--filename", "-f", default="hakamfile.json", help="Name of the test file to add values")
+    parser_rm.add_argument("--compile", "-c", action="store_true", help="Remove compile command")
+    parser_rm.add_argument("--test", "-t", metavar="index", help="Index of tests to remove")
 
     # Test command
     parser_test = subparsers.add_parser("test", help="Run tests on a test file")
-    parser_test.add_argument("testfile", nargs="?", default="testfile.json", help="Name of the test file to test")
-    parser_test.add_argument("--strict", "-s", action="store_true", help="exit if code answered wrong or if runtime error is thrown")
-    parser_test.add_argument("--verbose", "-v", action="store_true", help="print tests & results")
-
+    parser_test.add_argument("--filename", "-f", default="hakamfile.json", help="Name of the test file to test")
+    parser_test.add_argument("--strict", "-s", action="store_true", help="Exit if code answered wrong or if runtime error is thrown")
+    parser_test.add_argument("--verbose", "-v", action="store_true", help="Print tests & results")
+    
     args = parser.parse_args()
-
+    
     if args.command == "new":
-        test_dict = {
-            "compile": args.compile,
-            "execute": args.execute,
-            "tests": [""] * int(args.tests)
-        }
-        with open(args.testfile, "w") as f:
-            f.write(multiline.dumps(test_dict, indent=4))
-        print(f"{LIGHT_WHITE}Created new test file: {args.testfile}{RESET}")
+        new(args.filename, args.compile, args.execute, args.tests)
+        print(f"{LIGHT_WHITE}Created new test file: {args.filename}{RESET}")
+
+    elif args.command == "set":
+        set(args.filename, args.compile, args.execute, args.tests)
+        print(f"{LIGHT_WHITE}Set values in test file: {args.filename}{RESET}")
+
+    elif args.command == "add":
+        add(args.filename, args.compile, args.tests)
+        print(f"{LIGHT_WHITE}Added values to test file: {args.filename}{RESET}")
+
+    elif args.command == "rm":
+        remove(args.filename, args.compile, args.test)
+        print(f"{LIGHT_WHITE}Removed values from test file: {args.filename}{RESET}")
 
     elif args.command == "test":
-        result_dict = {}
-        with open(args.testfile, "r") as f:
-            test_dict = multiline.load(f, multiline=True)
-        result_dict = test(test_dict, strict=args.strict, verbose=args.verbose)
-        frontend.print_results(result_dict["results"])
-        frontend.print_final_result(result_dict["passed_count"], result_dict["wrong_count"], result_dict["error_count"])
-        print(test_dict)
-        print()
-        print(result_dict)
+        result_dict = test(args.filename. args.strict, args.verbose)
+        print_results(result_dict["results"])
+        print_final_result(result_dict["passed_count"], result_dict["wrong_count"], result_dict["error_count"])         
 
 if __name__ == "__main__":
     main()

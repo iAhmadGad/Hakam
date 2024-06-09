@@ -1,27 +1,14 @@
 import sys, subprocess, threading
-from frontend import print_dots
-
-RESET="\033[0m"
-BOLD="\033[1m"
-RED="\033[31m"
-GREEN="\033[32m"
-YELLOW="\033[33m"
-LIGHT_WHITE="\033[97m"
-LIGHT_GREEN="\033[38;5;48m"
-
-result_dict = {
-    "passed_count": 0,
-    "wrong_count": 0,
-    "error_count":0,
-    "results": []
-}
+from util.backend import get_test_dict
+from util.frontend import print_dots
+from util.colors import RESET, RED, GREEN, LIGHT_WHITE
 
 def compile(compile_command):
     compile_result = subprocess.run(compile_command, shell=True)
     if compile_result.returncode != 0:
         sys.exit(f"Compilation failed with code {compile_result.returncode}")
 
-def execute(execute_command, tests, strict, verbose):
+def execute(execute_command, tests, strict, verbose, result_dict):
     for i in range(len(tests)):
         test = tests[i]
         input_data = test[0].encode().decode('unicode_escape')  # Interpret escape sequences
@@ -57,11 +44,11 @@ def execute(execute_command, tests, strict, verbose):
         except subprocess.CalledProcessError as e:
             sys.exit(f"{RED}Execution Command failed with error code {e.returncode}: {e.output.decode()}{RESET}")
 
-    return result_dict
-            
-def test(test_dict, strict = False, verbose = False):
-    stop_event = threading.Event()
 
+def test(filename, strict, verbose):
+    test_dict = get_test_dict(filename)
+
+    stop_event = threading.Event()
     if "compile" in test_dict:
         print("Compiling...", end="")
         stop_event.clear()
@@ -75,17 +62,23 @@ def test(test_dict, strict = False, verbose = False):
         t1.join()
         print()
 
+    result_dict = {
+        "passed_count": 0,
+        "wrong_count": 0,
+        "error_count":0,
+        "results": []
+        }
+        
     if "execute" in test_dict:
         print("Testing...", end="")
         stop_event.clear()
         t1 = threading.Thread(target=print_dots, args=(stop_event,))
-        t2 = threading.Thread(target=execute, args=(test_dict["execute"], test_dict["tests"], strict, verbose))
+        t2 = threading.Thread(target=execute, args=(test_dict["execute"], test_dict["tests"], strict, verbose, result_dict))
         t1.start()
         t2.start()
 
         t2.join()
         stop_event.set()
         t1.join()
-        print()
 
     return result_dict
