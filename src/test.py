@@ -80,5 +80,7 @@ def test(filename, strict, verbose):
         t2.join()
         stop_event.set()
         t1.join()
+        
+        print()
 
     return result_dict

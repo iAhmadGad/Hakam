@@ -1,10 +1,10 @@
-import time
+from time import sleep
 from util.colors import RESET, BOLD, RED, YELLOW, LIGHT_WHITE, LIGHT_GREEN
 
 def print_dots(stop_event):
     while not stop_event.is_set():
         print(".", end="", flush=True)
-        time.sleep(0.5)
+        sleep(0.5)
 
 def get_tests(tests_number):
     tests = []
