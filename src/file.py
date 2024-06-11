@@ -43,6 +43,6 @@ def remove(filename, compile_command, test_index):
     if compile_command:
         del test_dict["compile"]
     if test_index:
-        del test_dict["tests"][int(test_index)]
+        del test_dict["tests"][int(test_index) - 1]
 
     set_test_file(filename, test_dict)
