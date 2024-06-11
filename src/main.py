@@ -1,19 +1,12 @@
 import argparse
 from test import test
-from file import new, set, add, remove
+from file import set, add, remove
 from util.frontend import print_results, print_final_result
 from util.colors import RESET, LIGHT_WHITE
     
 def main():
     parser = argparse.ArgumentParser(description="Hakam (Problem solving judge)")
     subparsers = parser.add_subparsers(dest="command", required=True)
-
-    # New command
-    parser_new = subparsers.add_parser("new", help="Create a new test file")
-    parser_new.add_argument("--filename", "-f", default="hakamfile.json", help="Name of the test file to create")
-    parser_new.add_argument("--compile", "-c", metavar="command", default="", help="Compile command")
-    parser_new.add_argument("--execute", "-e", metavar="command", default="", help="Execute command")
-    parser_new.add_argument("--tests", "-t", metavar="number",default=0, help="Number of tests")
 
     # Set command
     parser_set = subparsers.add_parser("set", help="Set values in a test file")
@@ -42,11 +35,7 @@ def main():
     
     args = parser.parse_args()
     
-    if args.command == "new":
-        new(args.filename, args.compile, args.execute, args.tests)
-        print(f"{LIGHT_WHITE}Created new test file: {args.filename}{RESET}")
-
-    elif args.command == "set":
+    if args.command == "set":
         set(args.filename, args.compile, args.execute, args.tests)
         print(f"{LIGHT_WHITE}Set values in test file: {args.filename}{RESET}")
 
