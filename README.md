@@ -28,11 +28,11 @@ Any language that supports `stdin` & `stdout`.
 git clone --depth 1 https://github.com/iahmadgad/hakam.git && cd hakam && make install
 ```
 
-## Test File
+## Hakamfile
 
-Test file is a json file Hakam uses to compile، execute, and then test your solution code.
+Hakamfile is a json file Hakam uses to compile، execute, and then test your solution code.
 
-Here is an example of a test file:
+Here is an example of a Hakamfile:
 
 ```json
 {
@@ -55,38 +55,59 @@ Here is an example of a test file:
 ## Usage
 
 ```bash
-hakam [-h, --help] {new,test} ...
+hakam [-h] {new,set,add,rm,test} ...
 ```
 
 ### `[-h, --help]`
 
 prints usage
 
-### `new [testfile]`
+### `new [-h] [-f, --filename FILENAME] [-c, --compile command] [-e, --execute command] [-t, --tests number]`
 
-- `[testfile]`: create file named `[testfile]`, if not given create file named literally `testfile.json`.
+- `[-f, --filename FILENAME]`: create file named `[FILENAME]`, if not given create file named `hakamfile.json`.
+- `[-c, --compile command]`: command used to compile your code.
+- `[-e, --execute command]`: command used to execute your code.
+- `[-t, --tests number]`: number of tests, if given, Hakam will prompt you for each input & output.
 
-The file will be written as follows:
+The file will shoud be something like this:
 
 ```json
 {
-    "compile": ""
-    "execute": "",
+    "compile": "command"
+    "execute": "command",
     "tests":,
     [
-        ["", ""],
-        ["", ""]
+        ["input1", "output1"],
+        ["input2", "output2"]
     ]
 }
 ```
 
-### `test [testfile] [-s, --strict] [-v, --verbose]`
+### `set [-h] [-f, --filename FILENAME] [-c, --compile command] [-e, --execute command] [-t, --tests number]`
 
-- `[testfile]`: test file named `[testfile]`, if not given test file named `testfile.json`.
+- `[-f, --filename FILENAME]`: name of file to set values, if not given set values in file named `hakamfile.json`.
+- `[-c, --compile command]`: command used to compile your code.
+- `[-e, --execute command]`: command used to execute your code.
+- `[-t, --tests number]`: number of tests, if given, Hakam will prompt you for each input & output, this will override any previous tests, if you already have tests and you want to add more, then use `add` instead.
+
+### `add [-h] [-f, --filename FILENAME] [-c, --compile command] [-t, --tests number]`
+
+- `[-f, --filename FILENAME]`: name of files to add values, if not given add values to file named `hakamfile.json`.
+- `[-c, --compile command]`: command used to compile your code.
+- `[-t, --tests number]`: number of tests, if given, Hakam will prompt you for each input & output, this won't override any previous tests.
+
+### `new [-h] [-f, --filename FILENAME] [-c, --compile command] [-t, --test index]`
+
+- `[-f, --filename FILENAME]`: name of file to delete values from, if not given delete values from file named `hakamfile.json`.
+- `[-c, --compile]`: command used to compile your code.
+- `[-t, --test index]`: index of test to delete, index begins from 1 not 0.
+
+### `test [-f, --filename FILENAME] [-s, --strict] [-v, --verbose]`
+
+- `[-f, --filename FILENAME]`: test file named `[FILENAME]` , if not given test file named `hakamfile.json`.
 - `[-s, --strict]`: exit if code answered wrong or if runtime error is thrown.
 - `[-v, --verbose]` print tests & results.
-
-## Examples:
+Output should be something like this:
 
 ```bash
 $ hakam test
