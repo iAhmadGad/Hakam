@@ -48,9 +48,7 @@ def main():
         print(f"{LIGHT_WHITE}Removed values from test file: {args.filename}{RESET}")
 
     elif args.command == "test":
-        result_dict = test(args.filename, args.strict, args.verbose)
-        print_results(result_dict["results"])
-        print_final_result(result_dict["passed_count"], result_dict["wrong_count"], result_dict["error_count"])         
+        test(args.filename, args.strict, args.verbose)
 
 if __name__ == "__main__":
     main()

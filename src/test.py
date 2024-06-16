@@ -1,6 +1,6 @@
 import sys, subprocess, threading
 from util.backend import get_test_dict
-from util.frontend import print_dots
+from util.frontend import print_dots, print_results, print_final_result
 from util.colors import RESET, RED, GREEN, LIGHT_WHITE
 
 def compile(compile_command):
@@ -22,27 +22,35 @@ def execute(execute_command, tests, strict, verbose, result_dict):
             )
             output = result.stdout.decode().strip()
             if result.returncode != 0:
-                if verbose:
-                    result_dict["results"].append(f"{LIGHT_WHITE}{i}: {RED}Execution failed with code {result.returncode}")
-                    result_dict["results"][-1] += f"\n{RED}{result.stderr.decode()}{RESET}"
-                    
                 result_dict["error_count"] += 1                
+                result = f"""{LIGHT_WHITE}{i}: {RED}Execution failed with code {result.returncode}
+{RED}{result.stderr.decode()}{RESET}"""
+                if verbose:
+                    result_dict["results"].append(result)                    
                 if strict:
-                     sys.exit(result_dict["results"][-1])
+                     sys.exit()
                     
             elif output == test[1].strip():
-                if verbose:
-                    result_dict["results"].append(f"{LIGHT_WHITE}{i + 1}: {GREEN}Test Passed :){RESET}")
                 result_dict["passed_count"] += 1
-            else:
+                result = f"{LIGHT_WHITE}{i + 1}: {GREEN}Test Passed :){RESET}"
                 if verbose:
-                    result_dict["results"].append(f"{LIGHT_WHITE}{i + 1}: {RED}Wrong Answer :^)\n{RESET}expected {LIGHT_WHITE}{test[1]} {RESET}for input {LIGHT_WHITE}{test[0]} {RESET}not {RED}{output}")
+                    result_dict["results"].append(result)
+            else:
                 result_dict["wrong_count"] += 1
+                result = f"""{LIGHT_WHITE}{i + 1}: {RED}Wrong Answer :^){RESET}
+{LIGHT_WHITE}input:{RESET}
+{test[0]}
+{RED}output:{RESET}
+{output}
+{LIGHT_WHITE}expected:{RESET}
+{test[1]}"""
+                if verbose:
+                    result_dict["results"].append(result)
                 if strict:
-                    sys.exit(f"{LIGHT_WHITE}{i + 1}: {RED}Wrong Answer :^)\n{RESET}expected {LIGHT_WHITE}{test[1]} {RESET}for input {LIGHT_WHITE}{test[0]} {RESET}not {RED}{output}")
+                    sys.exit()
 
         except subprocess.CalledProcessError as e:
-            sys.exit(f"{RED}Execution Command failed with error code {e.returncode}: {e.output.decode()}{RESET}")
+            sys.exit(f"{RED}Execution Command failed with error code {e.returncode}:\n{e.output.decode()}{RESET}")
 
 
 def test(filename, strict, verbose):
@@ -83,4 +91,6 @@ def test(filename, strict, verbose):
         
         print()
 
-    return result_dict
+    print_results(result_dict["results"])
+    if not strict: print_final_result(result_dict["passed_count"], result_dict["wrong_count"], result_dict["error_count"])         
+    
