@@ -1,7 +1,7 @@
 import sys, subprocess, threading
 from util.backend import get_test_dict
 from util.frontend import print_dots, print_results, print_final_result
-from util.colors import RESET, RED, GREEN, LIGHT_WHITE
+from util.colors import RESET, RED, GREEN, LIGHT_WHITE, YELLOW
 
 def compile(compile_command):
     compile_result = subprocess.run(compile_command, shell=True)
@@ -23,8 +23,8 @@ def execute(execute_command, tests, strict, verbose, result_dict):
             output = result.stdout.decode().strip()
             if result.returncode != 0:
                 result_dict["error_count"] += 1                
-                result = f"""{LIGHT_WHITE}{i}: {RED}Execution failed with code {result.returncode}
-{RED}{result.stderr.decode()}{RESET}"""
+                result = f"""{LIGHT_WHITE}{i}: {YELLOW}Execution failed with code {result.returncode}
+{result.stderr.decode().strip()}{RESET}"""
                 if verbose:
                     result_dict["results"].append(result)                    
                 if strict:
@@ -88,9 +88,8 @@ def test(filename, strict, verbose):
         t2.join()
         stop_event.set()
         t1.join()
-        
         print()
-
+        
     print_results(result_dict["results"])
     if not strict: print_final_result(result_dict["passed_count"], result_dict["wrong_count"], result_dict["error_count"])         
     

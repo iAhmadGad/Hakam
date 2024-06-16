@@ -29,7 +29,7 @@ def get_tests(tests_number):
 def print_results(results):
 
     for result in results:
-        print(f"{result}\n", end="")
+        print(result)
 
 def print_final_result(passed_count, wrong_count, error_count):
     
