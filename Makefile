@@ -1,4 +1,5 @@
 targets: prerequisites
+	multiliney
 	pyinstaller
 
 setup: requirements.txt
