@@ -41,4 +41,4 @@ def print_final_result(passed_count, wrong_count, error_count):
         if wrong_count:
             print(f"{RED}Wrong answers: {LIGHT_WHITE}{wrong_count}{RESET}")
         if error_count:
-            print(f"{YELLOW}Runtime wrrors: {LIGHT_WHITE}{error_count}{RESET}")
+            print(f"{YELLOW}Errors: {LIGHT_WHITE}{error_count}{RESET}")
