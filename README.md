@@ -96,7 +96,7 @@ The file will shoud be something like this:
 - `[-c, --compile command]`: command used to compile your code.
 - `[-t, --tests number]`: number of tests, if given, Hakam will prompt you for each input & output, this won't override any previous tests.
 
-### `new [-h] [-f, --filename FILENAME] [-c, --compile command] [-t, --test index]`
+### `rm [-h] [-f, --filename FILENAME] [-c, --compile command] [-t, --test index]`
 
 - `[-f, --filename FILENAME]`: name of file to delete values from, if not given delete values from file named `hakamfile.json`.
 - `[-c, --compile]`: command used to compile your code.
