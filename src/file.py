@@ -17,12 +17,9 @@ def set(filename, compile_command, execute_command, tests_number):
 
 
 def add(filename, compile_command, tests_number):
-    test_dict = {}
-    given_test_dict = get_test_dict(filename)
+    test_dict = get_test_dict(filename)
     if compile_command:
         test_dict.update({"compile": compile_command})
-    test_dict.update({"execute": given_test_dict["execute"]})
-    test_dict.update({"tests": given_test_dict["tests"]})
     if tests_number:
         test_dict["tests"].extend(get_tests(int(tests_number)))
 
