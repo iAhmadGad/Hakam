@@ -1,8 +1,12 @@
+import sys
 from multiline import load, dumps
 
 def get_test_dict(filename):
-    with open(filename, "r") as f:
+    try:
+        with open(filename, "r") as f:
             return load(f, multiline=True)
+    except FileNotFoundError:
+        sys.exit(f"Error: {filename} not found")
     
 
 def set_test_file(filename, test_dict):
