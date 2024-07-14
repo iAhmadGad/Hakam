@@ -17,7 +17,10 @@ def set(filename, compile_command, execute_command, tests_number):
 
 
 def add(filename, compile_command, tests_number):
-    test_dict = get_test_dict(filename)
+    try:
+        test_dict = get_test_dict(filename)
+    except FileNotFoundError:
+        print(f"Error: {filename} not found")
     if compile_command:
         test_dict.update({"compile": compile_command})
     if tests_number:
@@ -27,7 +30,10 @@ def add(filename, compile_command, tests_number):
 
 
 def remove(filename, compile_command, test_index):
-    test_dict = get_test_dict(filename)
+    try:
+        test_dict = get_test_dict(filename)
+    except FileNotFoundError:
+        print(f"Error: {filename} not found")
     if compile_command:
         del test_dict["compile"]
     if test_index:
