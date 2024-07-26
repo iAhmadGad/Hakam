@@ -1,13 +1,15 @@
 targets: prerequisites
-	multiliney
+	multiline
 	pyinstaller
 
 setup: requirements.txt
 	pip install -r requirements.txt
 
-install:
+build:
 	pyinstaller --onefile src/main.py --name=hakam
-	mv ./dist/hakam /bin/
+
+install:
+	mv dist/hakam /usr/bin/hakam
 
 clean:
 	find * -type d -name '__pycache__' -exec rm -rf {} +
