@@ -1,12 +1,8 @@
-targets: prerequisites
-	multiline
-	pyinstaller
-
 setup: requirements.txt
 	pip install -r requirements.txt
 
 build:
-	pyinstaller --onefile src/main.py --name=hakam
+	pyinstaller --onefile src/hakam/main.py --name=hakam
 
 install:
 	mv dist/hakam /usr/bin/hakam
