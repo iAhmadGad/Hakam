@@ -1,5 +1,5 @@
 # Hakam (Problem solving judge)
-
+[![Makefile CI](https://github.com/iahmadgad/hakam/actions/workflows/makefile.yml/badge.svg)](https://github.com/iahmadgad/hakam/actions/workflows/makefile.yml)
 ## Why Hakam?
 
 As a problem solver, sometimes you might have slow internet, and waiting until your submission get tested might take longer than expected, you might even refresh your page a lot of times.
