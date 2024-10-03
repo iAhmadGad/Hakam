@@ -1,5 +1,8 @@
 # Hakam (Problem solving judge)
-[![Makefile CI](https://github.com/iahmadgad/hakam/actions/workflows/makefile.yml/badge.svg)](https://github.com/iahmadgad/hakam/actions/workflows/makefile.yml)
+| Metrics | Workflows |
+| -------- | ------- |
+| ![Metrics](https://raw.githubusercontent.com/iahmadgad/iahmadgad-metrics/refs/heads/main/hakam-metrics.svg) | [![Makefile CI](https://github.com/iahmadgad/hakam/actions/workflows/makefile.yml/badge.svg)](https://github.com/iahmadgad/hakam/actions/workflows/makefile.yml)  [![Docs](https://github.com/iahmadgad/hakam/actions/workflows/docs.yml/badge.svg)](https://github.com/iahmadgad/hakam/actions/workflows/docs.yml)|
+
 ## Why Hakam?
 
 As a problem solver, sometimes you might have slow internet, and waiting until your submission get tested might take longer than expected, you might even refresh your page a lot of times.
@@ -61,27 +64,6 @@ hakam [-h] {new,set,add,rm,test} ...
 ### `[-h, --help]`
 
 prints usage
-
-### `new [-h] [-f, --filename FILENAME] [-c, --compile command] [-e, --execute command] [-t, --tests number]`
-
-- `[-f, --filename FILENAME]`: create file named `[FILENAME]`, if not given create file named `hakamfile.json`.
-- `[-c, --compile command]`: command used to compile your code.
-- `[-e, --execute command]`: command used to execute your code.
-- `[-t, --tests number]`: number of tests, if given, Hakam will prompt you for each input & output.
-
-The file will shoud be something like this:
-
-```json
-{
-    "compile": "command"
-    "execute": "command",
-    "tests":,
-    [
-        ["input1", "output1"],
-        ["input2", "output2"]
-    ]
-}
-```
 
 ### `set [-h] [-f, --filename FILENAME] [-c, --compile command] [-e, --execute command] [-t, --tests number]`
 
