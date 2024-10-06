@@ -1,7 +1,9 @@
 # Hakam (Problem solving judge)
-| Metrics | Workflows |
-| -------- | ------- |
-| ![Metrics](https://raw.githubusercontent.com/iahmadgad/iahmadgad-metrics/refs/heads/main/hakam-metrics.svg) | [![Makefile CI](https://github.com/iahmadgad/hakam/actions/workflows/makefile.yml/badge.svg)](https://github.com/iahmadgad/hakam/actions/workflows/makefile.yml) [![Docs](https://github.com/iahmadgad/hakam/actions/workflows/docs.yml/badge.svg)](https://github.com/iahmadgad/hakam/actions/workflows/docs.yml) |
+[![Makefile CI](https://github.com/iahmadgad/hakam/actions/workflows/makefile.yml/badge.svg)](https://github.com/iahmadgad/hakam/actions/workflows/makefile.yml) [![Docs](https://github.com/iahmadgad/hakam/actions/workflows/docs.yml/badge.svg)](https://github.com/iahmadgad/hakam/actions/workflows/docs.yml)
+<details>
+     <summary><img src="https://img.shields.io/badge/hakam-metrics-blue" alt="Metrics"></summary>
+     <img src="https://raw.githubusercontent.com/iahmadgad/iahmadgad/refs/heads/metrics/hakam.metrics.svg" alt="Metrics">     
+</details>
 
 ## Why Hakam?
 
